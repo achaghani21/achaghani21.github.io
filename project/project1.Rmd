@@ -1,0 +1,84 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r eval=F}
+## paste this chunk into the ```{r setup} chunk at the top of your project 1 .Rmd file
+
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, fig.align = "center", warning = F, message = F,
+tidy=TRUE, tidy.opts=list(width.cutoff=60), R.options=list(max.print=100))
+```
+
+## Project one SDS 348
+## Ali Chaghani
+I decided on two data sets from carData and fivethirtyeight to see if states with 
+a higher percentage of high school graduates who took a SAT have higher insurance 
+premiums. Overall, the variables my joint dataframe have state, Number of drivers involved in fatal collisions per billion miles, insurance_premiums, population, SAT verbal scores, and percent of high school graduates who took the SAT.
+I choose this as my project because I am currently teaching my bad driver best friend how to drive. 
+
+```{r}
+library(fivethirtyeight)
+library(carData)
+library(tidyverse)
+library(cluster)
+
+df <- subset(bad_drivers, select = -c(perc_no_previous))
+df_2 <- cbind( state = df$state,States)
+df_j <- left_join(df,df_2)
+new_df_j <- subset(df_j,select = c(state,num_drivers,insurance_premiums,pop,SATV,percent))
+head(new_df_j)
+```
+These states are SAT scores above the mean SAT score of the USA. 
+```{r}
+#SD
+new_df_j %>% group_by(percent,insurance_premiums) %>% summarise_if(is.numeric,list(sd=sd), na.rm = T)
+
+#Variance
+new_df_j %>% group_by(percent,insurance_premiums) %>% summarise_if(is.numeric,list(var=var), na.rm = T)
+
+#quantile
+new_df_j %>% summarise_if(is.numeric,list(Q1=quantile),probs = .25,na.rm=T)
+new_df_j %>% summarise_if(is.numeric,list(Q2=quantile),probs = .5,na.rm=T)
+new_df_j %>% summarise_if(is.numeric,list(Q3=quantile),probs = .75,na.rm=T)
+new_df_j %>% summarise_if(is.numeric,list(Q4=quantile),probs = 1,na.rm=T)
+
+#min and max 
+min_df <- new_df_j %>% summarise_if(is.numeric,list(min=min),na.rm = T)
+min_df %>% pivot_longer(cols = 2:5,names_to = "stat",values_to = "Value")
+
+max_df <- new_df_j %>% summarise_if(is.numeric,list(max=max),na.rm = T)
+max_df %>% pivot_longer(cols = 2:5,names_to = "stat",values_to = "Value")
+
+new_df_j %>% group_by(percent,insurance_premiums)%>%summarize_if(is.numeric,list(mean=mean),na.rm=T)
+```
+I found the basic five stats for my data. 
+
+```{r}
+ggplot(data=new_df_j, mapping = aes(x = percent, y = insurance_premiums)) + 
+  geom_point(aes(color = state)) +
+  theme_bw()
+
+ggplot(data = new_df_j,mapping = aes(x = percent, y = insurance_premiums)) +
+  geom_line()
+
+```
+As you can see from the graphs there is no clear relationship between graduating high school and taking the SAT to predict your insurance premium. 
+
+```{r}
+pam1<-new_df_j%>%pam(k=3)
+pam1$silinfo$avg.width
+
+pam_dat<-new_df_j%>%select(insurance_premiums,percent,num_drivers)
+sil_width<-vector()
+for(i in 2:10){  
+  pam_fit <- pam(pam_dat, k = i)  
+  sil_width[i] <- pam_fit$silinfo$avg.width  
+}
+ggplot()+geom_line(aes(x=1:10,y=sil_width))+scale_x_continuous(name="k",breaks=1:10)
+```
+Using two would be the best cluster. 
+
+Started this very late and this isn't my best work. Will do better on the next one. 
