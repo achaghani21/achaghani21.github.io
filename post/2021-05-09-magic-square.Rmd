@@ -1,0 +1,11 @@
+---
+title: 'Magic Square '
+author: Ali Chaghani
+date: '2021-05-09'
+slug: magic-square
+categories: []
+tags: []
+description: ''
+---
+A magic square is a $n\ x\ n$ matrix with the numbers 1,\ 2,\ 3,...,n^2. Where the sum of the elements in each row, column, and in the two diagonals equal the same value. For example, look at the picture below, it is a 3x3 matrix filled with the numbers 1 through 9 and you see that each row, column and both diagonals each 15. 
+![](/post/2021-05-09-magic-square_files/magics.png){width=400px height=400px}

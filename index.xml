@@ -6,7 +6,16 @@
     <description>Recent content on Ali Chaghani</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Thu, 23 Jul 2015 21:13:14 -0500</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 09 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Magic Square </title>
+      <link>/post/2021/05/09/magic-square/</link>
+      <pubDate>Sun, 09 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2021/05/09/magic-square/</guid>
+      <description> A magic square is a \(n\ x\ n\) matrix with the numbers 1, 2, 3,…,n^2. Where the sum of the elements in each row, column, and in the two diagonals equal the same value. For example, look at the picture below, it is a 3x3 matrix filled with the numbers 1 through 9 and you see that each row, column and both diagonals each 15. </description>
+    </item>
+    
     <item>
       <title>Hello R Markdown</title>
       <link>/post/2015/07/23/hello-r-markdown/</link>
