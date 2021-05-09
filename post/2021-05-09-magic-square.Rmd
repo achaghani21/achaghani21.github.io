@@ -9,3 +9,132 @@ description: ''
 ---
 A magic square is a $n\ x\ n$ matrix with the numbers 1,\ 2,\ 3,...,n^2. Where the sum of the elements in each row, column, and in the two diagonals equal the same value. For example, look at the picture below, it is a 3x3 matrix filled with the numbers 1 through 9 and you see that each row, column and both diagonals each 15. 
 ![](/post/2021-05-09-magic-square_files/magics.png){width=400px height=400px}
+
+We will make the algorithm for a magic square through python. For our code, a 1 has to be place in the middle of the bottom row and must be an odd matrix size. A couple of rules, after $k$, where $k$ is a number between $1$ and $n^2$, has been spaced in the square, place $k+1$ in the square to the right and down, wrapping around the borders. However, if that spot has already been filled, or if you are in the lower right corner, then you must move to the spot straight up instead. Please note there is different algorithms for constructing a magic square. I used this one because it is what I learned in CS 313e.
+
+For the first part, we must make a 2-D list with numbers from 1 to n^2. I will print the picture below using my code. Now this part just prints a matrix nicely but doesn't check if it is an actual magic square but we can compare to the picture to see if there is a difference. 
+```{python}
+def make_square ( n ):
+    
+    #creates 2D list, n x n, filled with 0's
+    magic_square = []
+    for row in range(n):
+        magic_square.append([])
+        for col in range(n):
+            magic_square[row].append(0)
+            
+    #locates and puts a one in the middle of the bottom row
+    start_pt = int(((n+1)/2)-1)
+    magic_square[n-1][start_pt] = 1
+
+    #constructs the magic square
+    x = n-1
+    y = start_pt
+    num = 2
+    while num <= n * n:
+        if magic_square[x][y] != n * n :
+            x = x+1
+            y = y+1
+            if x == n and y == n:
+                x = x - 2
+                y = y - 1
+            if y not in range(n):
+                y = 0
+            if x not in range(n):
+                x = 0
+            if magic_square[x][y] == 0:
+                magic_square[x][y] = num
+            else:
+                x = x - 2
+                y = y - 1
+                magic_square[x][y] = num
+            num = num + 1
+    return magic_square
+
+#this code makes the matrix print nice. 
+def print_square ( magic_square ):
+    
+    print("Here is a",len(magic_square),"x",len(magic_square),"magic square: \n")
+    for row in magic_square:
+        for col in row:
+            print(str(col).rjust(5), end="")
+        print()
+print_square(make_square(3))
+```
+This next chunk will check the the matrix and make sure it is a magic square. We will use 7 as an example, since you can't input an odd number yourself. 
+```{python}
+def check_square ( magic_square ):
+    
+    size = len(magic_square)
+    #The sums must equal this number
+    num_check = int((size*(size*size + 1))/2)
+
+    #sums each row and adds it to a list    
+    sum_of_rows = []
+    num = 0
+    for row in magic_square:
+        for col in row:
+            num = num + col
+        sum_of_rows.append(num)
+        num = 0
+        
+    #sums each column and adds it to a list
+    sum_of_cols = []
+    num=0
+    for i in range(size):
+        for row in magic_square:
+            num = num + row[i]
+        sum_of_cols.append(num)
+        num=0
+        
+    #sums main dia and adds it to a list
+    sum_of_dia = []
+    num=0
+    for i in range(size):
+        for j in range(size):
+            if i == j:
+                num = num + magic_square[i][j]
+    sum_of_dia.append(num)
+    
+    #sums opp dia and adds it to a list    
+    i=size-1
+    num = 0
+    while i >= 0:
+        for j in range(size):
+            if i + j == size-1:
+                num = num + magic_square[i][j]
+        i = i -1
+    sum_of_dia.append(num)
+
+    #checks if each value are the same using all function
+    #If true, it will check the first value to num_check
+    #since all the values of the list are the same
+    if all(sum_of_rows) == True:
+        if sum_of_rows[0] == num_check:
+            print("Sum of row = ", num_check)
+    if all(sum_of_cols) == True:
+        if sum_of_cols[0] == num_check:
+            print("Sum of column = ", num_check)
+    if all(sum_of_dia) == True:
+        if sum_of_dia[0] == num_check:
+            print("Sum diagonal (UL to LR) = ", num_check)
+            print("Sum diagonal (UR to LL) = ", num_check)
+        
+def main():
+    #makes sure input is odd and greater or equal to three.
+    #num_input = int(input("Please enter an odd number: "))
+    #while num_input < 3 or num_input % 2 == 0:
+        #num_input = int(input("Please enter an odd number: "))
+    #print()
+    num_input =7
+    magic_square =  make_square(num_input)
+    print_square(magic_square)
+    print()
+    check_square(magic_square)
+    
+main()
+```
+We have constructed a magic square!
+
+Reference: [Magic Square](https://www.cs.utexas.edu/~mitra/csSummer2019/cs313/assgn/assgn2.html)
+
