@@ -72,10 +72,12 @@
               
 
 
-<p>A magic square is a <span class="math inline">\(n\ x\ n\)</span> matrix with the numbers 1, 2, 3,…,n^2. Where the sum of the elements in each row, column, and in the two diagonals equal the same value. For example, look at the picture below, it is a 3x3 matrix filled with the numbers 1 through 9 and you see that each row, column and both diagonals each 15.
+<p>A magic square is a <span class="math inline">\(n\ x\ n\)</span> matrix with the numbers <span class="math inline">\(1, 2, 3,...,n^2\)</span>. Where the sum of the elements in each row, column, and in the two diagonals equal the same value. For example, look at the picture below, it is a 3x3 matrix filled with the numbers 1 through 9 and you see that each row, column and both diagonals each equals 15.
 <img src="../../../../../post/2021-05-09-magic-square_files/magics.png" width="400" height="400" /></p>
-<p>We will make the algorithm for a magic square through python. For our code, a 1 has to be place in the middle of the bottom row and must be an odd matrix size. A couple of rules, after <span class="math inline">\(k\)</span>, where <span class="math inline">\(k\)</span> is a number between <span class="math inline">\(1\)</span> and <span class="math inline">\(n^2\)</span>, has been spaced in the square, place <span class="math inline">\(k+1\)</span> in the square to the right and down, wrapping around the borders. However, if that spot has already been filled, or if you are in the lower right corner, then you must move to the spot straight up instead. Please note there is different algorithms for constructing a magic square. I used this one because it is what I learned in CS 313e.</p>
-<p>For the first part, we must make a 2-D list with numbers from 1 to n^2. I will print the picture below using my code. Now this part just prints a matrix nicely but doesn’t check if it is an actual magic square but we can compare to the picture to see if there is a difference.</p>
+<p>We will make the algorithm for a magic square through python. For our code, a 1 has to be place in the middle of the bottom row and must be an odd matrix size. A couple of rules, after <span class="math inline">\(k\)</span>, where <span class="math inline">\(k\)</span> is a number between <span class="math inline">\(1\)</span> and <span class="math inline">\(n^2\)</span>, has been spaced in the square, place <span class="math inline">\(k+1\)</span> in the square to the right and down, wrapping around the borders. However, if that spot has already been filled, or if you are in the lower right corner, then you must move to the spot straight up instead. Please note there is different algorithms for constructing a magic square. I used this one because it is what I learned in CS 313e. I will name a variable in R and use the reticulate package to use both r and python.</p>
+<pre class="r"><code>library(reticulate)
+num &lt;- as.integer(3)</code></pre>
+<p>For the first part, we must make a 2-D list with numbers from 1 to <span class="math inline">\(n^2\)</span>. I will print the picture below using my code. Now this part just prints a matrix nicely but doesn’t check if it is an actual magic square but we can compare to the picture to see if there is a difference.</p>
 <pre class="python"><code>def make_square ( n ):
     
     #creates 2D list, n x n, filled with 0&#39;s
@@ -121,7 +123,7 @@ def print_square ( magic_square ):
         for col in row:
             print(str(col).rjust(5), end=&quot;&quot;)
         print()
-print_square(make_square(3))</code></pre>
+print_square(make_square(r.num))</code></pre>
 <pre><code>## Here is a 3 x 3 magic square: 
 ## 
 ##     4    9    2
@@ -214,6 +216,10 @@ main()</code></pre>
 ## Sum diagonal (UR to LL) =  175</code></pre>
 <p>We have constructed a magic square!</p>
 <p>Reference: <a href="https://www.cs.utexas.edu/~mitra/csSummer2019/cs313/assgn/assgn2.html">Magic Square</a></p>
+<script src="//yihui.org/js/math-code.js"></script>
+<script async
+src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
 
             
         <hr>         <div class="related-posts">

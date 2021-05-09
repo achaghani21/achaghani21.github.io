@@ -7,12 +7,17 @@ categories: []
 tags: []
 description: ''
 ---
-A magic square is a $n\ x\ n$ matrix with the numbers 1,\ 2,\ 3,...,n^2. Where the sum of the elements in each row, column, and in the two diagonals equal the same value. For example, look at the picture below, it is a 3x3 matrix filled with the numbers 1 through 9 and you see that each row, column and both diagonals each 15. 
+A magic square is a $n\ x\ n$ matrix with the numbers $1, 2, 3,...,n^2$. Where the sum of the elements in each row, column, and in the two diagonals equal the same value. For example, look at the picture below, it is a 3x3 matrix filled with the numbers 1 through 9 and you see that each row, column and both diagonals each equals 15. 
 ![](/post/2021-05-09-magic-square_files/magics.png){width=400px height=400px}
 
-We will make the algorithm for a magic square through python. For our code, a 1 has to be place in the middle of the bottom row and must be an odd matrix size. A couple of rules, after $k$, where $k$ is a number between $1$ and $n^2$, has been spaced in the square, place $k+1$ in the square to the right and down, wrapping around the borders. However, if that spot has already been filled, or if you are in the lower right corner, then you must move to the spot straight up instead. Please note there is different algorithms for constructing a magic square. I used this one because it is what I learned in CS 313e.
+We will make the algorithm for a magic square through python. For our code, a 1 has to be place in the middle of the bottom row and must be an odd matrix size. A couple of rules, after $k$, where $k$ is a number between $1$ and $n^2$, has been spaced in the square, place $k+1$ in the square to the right and down, wrapping around the borders. However, if that spot has already been filled, or if you are in the lower right corner, then you must move to the spot straight up instead. Please note there is different algorithms for constructing a magic square. I used this one because it is what I learned in CS 313e. I will name a variable in R and use the reticulate package to use both r and python.
+```{r}
+library(reticulate)
+num <- as.integer(3)
+```
 
-For the first part, we must make a 2-D list with numbers from 1 to n^2. I will print the picture below using my code. Now this part just prints a matrix nicely but doesn't check if it is an actual magic square but we can compare to the picture to see if there is a difference. 
+
+For the first part, we must make a 2-D list with numbers from 1 to $n^2$. I will print the picture below using my code. Now this part just prints a matrix nicely but doesn't check if it is an actual magic square but we can compare to the picture to see if there is a difference. 
 ```{python}
 def make_square ( n ):
     
@@ -59,8 +64,10 @@ def print_square ( magic_square ):
         for col in row:
             print(str(col).rjust(5), end="")
         print()
-print_square(make_square(3))
+print_square(make_square(r.num))
+
 ```
+
 This next chunk will check the the matrix and make sure it is a magic square. We will use 7 as an example, since you can't input an odd number yourself. 
 ```{python}
 def check_square ( magic_square ):
@@ -138,3 +145,7 @@ We have constructed a magic square!
 
 Reference: [Magic Square](https://www.cs.utexas.edu/~mitra/csSummer2019/cs313/assgn/assgn2.html)
 
+<script src="//yihui.org/js/math-code.js"></script>
+<script async
+src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
